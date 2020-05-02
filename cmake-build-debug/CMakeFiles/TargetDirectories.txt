@@ -1,0 +1,3 @@
+C:/Users/Comarch/Desktop/studia/rownloegle/projekt1/Prim/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Comarch/Desktop/studia/rownloegle/projekt1/Prim/cmake-build-debug/CMakeFiles/Prim.dir
+C:/Users/Comarch/Desktop/studia/rownloegle/projekt1/Prim/cmake-build-debug/CMakeFiles/edit_cache.dir
