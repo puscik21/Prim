@@ -122,12 +122,8 @@ public:
         Edge newEdge2 = n2->findMinWeight();
         if (newEdge1.weight < newEdge2.weight) {
             minEdges.push_back(newEdge1);
-//            nodes[newEdge1.begin].weights[newEdge1.end] = 0;
-//            nodes[newEdge1.end].weights[newEdge1.begin] = 0;
         } else {
             minEdges.push_back(newEdge2);
-//            nodes[newEdge2.begin].weights[newEdge2.end] = 0;
-//            nodes[newEdge2.end].weights[newEdge2.begin] = 0;
         }
     }
 
@@ -141,11 +137,13 @@ public:
     }
 };
 
-// todo wpisywanie krawedzi z linii komend
+// TODO input of edges from command line
+// TODO input of edges from file
 int main() {
     int graphSize = 8;
     Graph graph = Graph(graphSize);
 
+    // initialization from prepared vector weights - probably to be removed
 //    int weights0[] = {0, 3, 8, 4, 5, 0};
 //    int weights1[] = {3, 0, 5, 0, 0, 0};
 //    int weights2[] = {8, 5, 0, 0, 0, 0};
@@ -160,7 +158,7 @@ int main() {
 //    graph.addNodeFromArray(4, weights4, graphSize);
 //    graph.addNodeFromArray(5, weights5, graphSize);
 
-// graph 1 - sum 24
+// graph 1 - sum 24 - 6 nodes, sum 24
 //    graph.addEdge(Edge(0, 1, 3));
 //    graph.addEdge(Edge(0, 2, 8));
 //    graph.addEdge(Edge(0, 3, 4));
@@ -171,7 +169,7 @@ int main() {
 //    graph.addEdge(Edge(4, 5, 8));
 
 
-// graph 2 - sum 26
+// graph 2 - 8 nodes, sum 26
     graph.addEdge(Edge(0, 1, 5));
     graph.addEdge(Edge(0, 3, 9));
     graph.addEdge(Edge(0, 6, 3));
@@ -188,6 +186,33 @@ int main() {
     graph.addEdge(Edge(4, 6, 1));
     graph.addEdge(Edge(5, 6, 6));
     graph.addEdge(Edge(6, 7, 9));
+
+// test case 1 - 3 nodes, sum 113
+//    graph.addEdge(Edge(1, 0, 67));
+//    graph.addEdge(Edge(2, 0, 46));
+//    graph.addEdge(Edge(2, 1, 75));
+
+// test case 2 - 5 nodes, sum 89
+//    graph.addEdge(Edge(1, 0, 29));
+//    graph.addEdge(Edge(2, 1, 52));
+//    graph.addEdge(Edge(3, 0, 20));
+//    graph.addEdge(Edge(4, 2, 45));
+//    graph.addEdge(Edge(1, 4, 42));
+//    graph.addEdge(Edge(1, 3, 19));
+//    graph.addEdge(Edge(0, 4, 5));
+//    graph.addEdge(Edge(4, 3, 26));
+//    graph.addEdge(Edge(3, 2, 76));
+
+// test case 3 - 6 nodes, sum 130
+//    graph.addEdge(Edge(0, 1, 50));
+//    graph.addEdge(Edge(0, 2, 80));
+//    graph.addEdge(Edge(1, 2, 60));
+//    graph.addEdge(Edge(1, 3, 20));
+//    graph.addEdge(Edge(2, 4, 40));
+//    graph.addEdge(Edge(1, 4, 30));
+//    graph.addEdge(Edge(3, 4, 10));
+//    graph.addEdge(Edge(3, 5, 10));
+//    graph.addEdge(Edge(4, 5, 50));
 
     cout<<"HERE\n\n\n";
     graph.findMinPath();
