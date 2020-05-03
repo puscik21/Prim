@@ -90,12 +90,16 @@ public:
 
     void removeDuplicates() {
         vector<Edge> newVector;
-        bool isDuplicated = false;
         for (int i = 0; i < minEdges.size(); i++) {
+            if (newVector.size() >= size - 1) {
+                break;
+            }
+            bool isDuplicated = false;
             for (int j = 0; j < newVector.size(); j++) {
                 Edge e1 = minEdges[i];
-                Edge e2 = minEdges[j];
+                Edge e2 = newVector[j];
                 if (e1.begin == e2.begin && e1.end == e2.end && e1.weight == e2.weight) {
+                    lookForNewEdge(e1);
                     isDuplicated = true;
                     break;
                 }
@@ -105,6 +109,26 @@ public:
             }
         }
         minEdges = newVector;
+    }
+
+    void lookForNewEdge(Edge e1) {
+        Node* n1 = &nodes[e1.begin];
+        Node* n2 = &nodes[e1.end];
+        n1->weights[n2->number] = 0;
+        n2->weights[n1->number] = 0;
+
+        // look for smaller edge
+        Edge newEdge1 = n1->findMinWeight();
+        Edge newEdge2 = n2->findMinWeight();
+        if (newEdge1.weight < newEdge2.weight) {
+            minEdges.push_back(newEdge1);
+//            nodes[newEdge1.begin].weights[newEdge1.end] = 0;
+//            nodes[newEdge1.end].weights[newEdge1.begin] = 0;
+        } else {
+            minEdges.push_back(newEdge2);
+//            nodes[newEdge2.begin].weights[newEdge2.end] = 0;
+//            nodes[newEdge2.end].weights[newEdge2.begin] = 0;
+        }
     }
 
     void print() {
