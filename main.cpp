@@ -46,7 +46,7 @@ public:
         int min = INT_MAX;
         int index = number;
         for (int i = 0; i < weights.size(); i++) {
-            if (weights[i] != 0 && weights[i] < min) {
+            if (weights[i] != 0 && weights[i] < min) {  // weight 0 is for nodes where it cant get or for node itself
                 min = weights[i];
                 index = i;
             }
@@ -61,6 +61,7 @@ public:
     Node *nodes; // list of nodes in graph
     vector<Edge> minEdges; // list of minimal edges
 
+    Graph() = default;
     Graph(int size) {
         this->size = size;
         nodes = new Node[size];
@@ -74,6 +75,7 @@ public:
         nodes[number] = node;
     }
 
+    // was useful for first tests, now its to be removed probably
     void addNodeFromArray(int number, int weights[], int weightsSize) {
         nodes[number] = Node(number, vector<int>(weights, weights + weightsSize));
     }
@@ -212,7 +214,7 @@ int showMenu() {
 int main(int argc, char *argv[]) {
     int option = showMenu();
     string path;
-    Graph graph = NULL;
+    Graph graph;
     switch (option) {
         case 1:
             cout << "Podaj nazwe pliku (wraz z rozszerzeniem)\n";
@@ -226,7 +228,6 @@ int main(int argc, char *argv[]) {
             graph = initGraphFromDefault();
             break;
     }
-    graph.findMinPath();
 
 //    int myid, numprocs;
 //    MPI_Init(&argc, &argv);
@@ -237,6 +238,6 @@ int main(int argc, char *argv[]) {
 
 
 //    if (myid == 0) {
-//        graph.findMinPath();
+        graph.findMinPath();
 //    }
 }

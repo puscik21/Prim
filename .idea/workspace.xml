@@ -12,14 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="572acf3d-0bfa-4fd0-81c4-bf1af65070a1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/graph1.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Prim.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Prim.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Prim.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Prim.dir/main.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Prim.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Prim.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Prim.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Prim.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graph1.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +67,7 @@
       <updated>1588419030378</updated>
       <workItem from="1588419031625" duration="14335000" />
       <workItem from="1588498858774" duration="21720000" />
-      <workItem from="1588585731759" duration="6548000" />
+      <workItem from="1588585731759" duration="8561000" />
     </task>
     <task id="LOCAL-00001" summary="Initialization with edges">
       <created>1588510608204</created>
@@ -96,7 +90,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588523794415</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="User menu (read from file/CMD/default)">
+      <created>1588629101025</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1588629101025</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,7 +107,8 @@
     <MESSAGE value="Initialization with edges" />
     <MESSAGE value="Probably working version" />
     <MESSAGE value="Working version with hard coded test cases" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working version with hard coded test cases" />
+    <MESSAGE value="User menu (read from file/CMD/default)" />
+    <option name="LAST_COMMIT_MESSAGE" value="User menu (read from file/CMD/default)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588506137948">
@@ -125,29 +127,30 @@
       <screen x="-1920" y="0" width="1536" height="824" />
     </state>
     <state x="-1216" y="99" width="488" height="591" key="#xdebugger.evaluate/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1588514638410" />
-    <state x="155" y="37" width="954" height="738" key="CommitChangelistDialog2" timestamp="1588523792912">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="-1765" y="37" width="954" height="738" key="CommitChangelistDialog2" timestamp="1588629098417">
+      <screen x="-1920" y="0" width="1536" height="824" />
     </state>
+    <state x="-1765" y="37" key="CommitChangelistDialog2/0.0.1536.824/-1920.0.1536.824@-1920.0.1536.824" timestamp="1588629098417" />
     <state x="155" y="37" width="954" height="738" key="CommitChangelistDialog2/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1588523792912" />
-    <state width="1493" height="222" key="GridCell.Tab.0.bottom" timestamp="1588629000771">
+    <state width="1493" height="222" key="GridCell.Tab.0.bottom" timestamp="1588631046883">
       <screen x="-1920" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="222" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.0.1536.824@-1920.0.1536.824" timestamp="1588629000771" />
+    <state width="1493" height="222" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.0.1536.824@-1920.0.1536.824" timestamp="1588631046883" />
     <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1588534270171" />
-    <state width="1493" height="222" key="GridCell.Tab.0.center" timestamp="1588629000771">
+    <state width="1493" height="222" key="GridCell.Tab.0.center" timestamp="1588631046883">
       <screen x="-1920" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="222" key="GridCell.Tab.0.center/0.0.1536.824/-1920.0.1536.824@-1920.0.1536.824" timestamp="1588629000771" />
+    <state width="1493" height="222" key="GridCell.Tab.0.center/0.0.1536.824/-1920.0.1536.824@-1920.0.1536.824" timestamp="1588631046883" />
     <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1588534270171" />
-    <state width="1493" height="222" key="GridCell.Tab.0.left" timestamp="1588629000770">
+    <state width="1493" height="222" key="GridCell.Tab.0.left" timestamp="1588631046883">
       <screen x="-1920" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="222" key="GridCell.Tab.0.left/0.0.1536.824/-1920.0.1536.824@-1920.0.1536.824" timestamp="1588629000770" />
+    <state width="1493" height="222" key="GridCell.Tab.0.left/0.0.1536.824/-1920.0.1536.824@-1920.0.1536.824" timestamp="1588631046883" />
     <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1588534270171" />
-    <state width="1493" height="222" key="GridCell.Tab.0.right" timestamp="1588629000771">
+    <state width="1493" height="222" key="GridCell.Tab.0.right" timestamp="1588631046883">
       <screen x="-1920" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="222" key="GridCell.Tab.0.right/0.0.1536.824/-1920.0.1536.824@-1920.0.1536.824" timestamp="1588629000771" />
+    <state width="1493" height="222" key="GridCell.Tab.0.right/0.0.1536.824/-1920.0.1536.824@-1920.0.1536.824" timestamp="1588631046883" />
     <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1588534270171" />
     <state width="1493" height="321" key="GridCell.Tab.1.bottom" timestamp="1588534270167">
       <screen x="0" y="0" width="1536" height="824" />
@@ -185,6 +188,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="255" y="-21" width="1124" height="811" maximized="true" key="dock-window-1/0.0.1536.824/-1920.0.1536.824@-1920.0.1536.824" timestamp="1588625537030" />
+    <state x="294" y="-11" width="1124" height="561" maximized="true" key="dock-window-2" timestamp="1588630242672">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="294" y="-11" width="1124" height="561" maximized="true" key="dock-window-2/0.0.1536.824/-1920.0.1536.824@-1920.0.1536.824" timestamp="1588630242672" />
     <state x="-1489" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1588628120311">
       <screen x="-1920" y="0" width="1536" height="824" />
     </state>
