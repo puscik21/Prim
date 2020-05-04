@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+//#include "mpi.h"
+#include <climits>
+#include <fstream>
 
 using namespace std;
 
@@ -137,39 +140,44 @@ public:
     }
 };
 
-// TODO input of edges from command line
-// TODO input of edges from file
-int main() {
-    int graphSize = 8;
+Graph initGraphFromFile(string path) {
+    int graphSize, edgesCount, begin, end, weight;
+    ifstream file(path);
+    file >> graphSize;
+    file >> edgesCount;
     Graph graph = Graph(graphSize);
+    for (int i = 0; i < edgesCount; i++) {
+        file >> begin;
+        file >> end;
+        file >> weight;
+        graph.addEdge(Edge(begin, end, weight));
+    }
+    return graph;
+}
 
-    // initialization from prepared vector weights - probably to be removed
-//    int weights0[] = {0, 3, 8, 4, 5, 0};
-//    int weights1[] = {3, 0, 5, 0, 0, 0};
-//    int weights2[] = {8, 5, 0, 0, 0, 0};
-//    int weights3[] = {4, 0, 0, 0, 4, 9};
-//    int weights4[] = {5, 0, 0, 4, 0, 8};
-//    int weights5[] = {0, 0, 0, 9, 8, 0};
-//
-//    graph.addNodeFromArray(0, weights0, graphSize);
-//    graph.addNodeFromArray(1, weights1, graphSize);
-//    graph.addNodeFromArray(2, weights2, graphSize);
-//    graph.addNodeFromArray(3, weights3, graphSize);
-//    graph.addNodeFromArray(4, weights4, graphSize);
-//    graph.addNodeFromArray(5, weights5, graphSize);
+Graph initGraphFromCMD() {
+    int graphSize, edgesCount, begin, end, weight;
+    cout << "Podaj liczbe wierzcholkow w grafie\n";
+    cin >> graphSize;
+    cout << "Podaj liczbe krawedzi w grafie\n";
+    cin >> edgesCount;
+    Graph graph = Graph(graphSize);
+    for (int i = 0; i < edgesCount; i++) {
+        cout << "Punkt poczatkowy:\n";
+        cin >> begin;
+        cout << "Punkt koncowy:\n";
+        cin >> end;
+        cout << "Waga:\n";
+        cin >> weight;
+        graph.addEdge(Edge(begin, end, weight));
+        cout << endl;
+    }
+    return graph;
+}
 
-// graph 1 - sum 24 - 6 nodes, sum 24
-//    graph.addEdge(Edge(0, 1, 3));
-//    graph.addEdge(Edge(0, 2, 8));
-//    graph.addEdge(Edge(0, 3, 4));
-//    graph.addEdge(Edge(0, 4, 5));
-//    graph.addEdge(Edge(1, 2, 5));
-//    graph.addEdge(Edge(3, 4, 4));
-//    graph.addEdge(Edge(3, 5, 9));
-//    graph.addEdge(Edge(4, 5, 8));
-
-
-// graph 2 - 8 nodes, sum 26
+Graph initGraphFromDefault() {
+// graph2 - 8 nodes, sum 26
+    Graph graph = Graph(8);
     graph.addEdge(Edge(0, 1, 5));
     graph.addEdge(Edge(0, 3, 9));
     graph.addEdge(Edge(0, 6, 3));
@@ -186,34 +194,49 @@ int main() {
     graph.addEdge(Edge(4, 6, 1));
     graph.addEdge(Edge(5, 6, 6));
     graph.addEdge(Edge(6, 7, 9));
+    return graph;
+}
 
-// test case 1 - 3 nodes, sum 113
-//    graph.addEdge(Edge(1, 0, 67));
-//    graph.addEdge(Edge(2, 0, 46));
-//    graph.addEdge(Edge(2, 1, 75));
+int showMenu() {
+    int option;
+    cout << "Algorytm Prima wyznaczajacy minimalne drzewo rozpinajace\n\n";
+    cout << "Wybierz opcje uruchomienia programu\n";
+    cout << "1 - graf inicjalizowany z pliku\n";
+    cout << "2 - graf inicjalizowany z linii komend\n";
+    cout << "inna - obliczenie przykladowego przypadku\n";
+    cin >> option;
+    return option;
+}
 
-// test case 2 - 5 nodes, sum 89
-//    graph.addEdge(Edge(1, 0, 29));
-//    graph.addEdge(Edge(2, 1, 52));
-//    graph.addEdge(Edge(3, 0, 20));
-//    graph.addEdge(Edge(4, 2, 45));
-//    graph.addEdge(Edge(1, 4, 42));
-//    graph.addEdge(Edge(1, 3, 19));
-//    graph.addEdge(Edge(0, 4, 5));
-//    graph.addEdge(Edge(4, 3, 26));
-//    graph.addEdge(Edge(3, 2, 76));
-
-// test case 3 - 6 nodes, sum 130
-//    graph.addEdge(Edge(0, 1, 50));
-//    graph.addEdge(Edge(0, 2, 80));
-//    graph.addEdge(Edge(1, 2, 60));
-//    graph.addEdge(Edge(1, 3, 20));
-//    graph.addEdge(Edge(2, 4, 40));
-//    graph.addEdge(Edge(1, 4, 30));
-//    graph.addEdge(Edge(3, 4, 10));
-//    graph.addEdge(Edge(3, 5, 10));
-//    graph.addEdge(Edge(4, 5, 50));
-
-    cout<<"HERE\n\n\n";
+// TODO imitation of multiple processes
+int main(int argc, char *argv[]) {
+    int option = showMenu();
+    string path;
+    Graph graph = NULL;
+    switch (option) {
+        case 1:
+            cout << "Podaj nazwe pliku (wraz z rozszerzeniem)\n";
+            cin>>path;
+            graph = initGraphFromFile(path);
+            break;
+        case 2:
+            graph = initGraphFromCMD();
+            break;
+        default:
+            graph = initGraphFromDefault();
+            break;
+    }
     graph.findMinPath();
+
+//    int myid, numprocs;
+//    MPI_Init(&argc, &argv);
+//    MPI_Comm world = MPI_COMM_WORLD;
+//    MPI_Comm_size (world, &numprocs);
+//    MPI_Comm_rank(world, &myid);
+
+
+
+//    if (myid == 0) {
+//        graph.findMinPath();
+//    }
 }
