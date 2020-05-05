@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
-//#include "mpi.h"
+#include "mpi.h"
 #include <climits>
 #include <fstream>
+
+#define rootId 0;
 
 using namespace std;
 
@@ -85,12 +87,27 @@ public:
         nodes[edge.end].weights[edge.begin] = edge.weight;
     }
 
-    void findMinPath() {
-        for (int i = 0; i < size; i++) {
-            minEdges.push_back(this->nodes[i].findMinWeight());
+    void findMinPath(int mpiId, int numprocs) {
+        int edgeValues[3];
+        if (mpiId == 0) {
+            MPI_Bcast(&size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+            do {
+                MPI_Recv(edgeValues, 3, MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);     // master receive edge
+                Edge edge = Edge(edgeValues[0], edgeValues[1], edgeValues[2]);
+                minEdges.push_back(edge);
+            } while (minEdges.size() < size);
+            removeDuplicates();
+            print();
+        } else {
+            MPI_Bcast(&size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+            for (int i = mpiId - 1; i < size; i+=numprocs-1) {  // -1 because its without master
+                Edge edge = this->nodes[i].findMinWeight();
+                edgeValues[0] = edge.begin;
+                edgeValues[1] = edge.end;
+                edgeValues[2] = edge.weight;
+                MPI_Send(edgeValues, 3, MPI_INT, 0, 0, MPI_COMM_WORLD);     // send edge to master
+            }
         }
-        removeDuplicates();
-        print();
     }
 
     void removeDuplicates() {
@@ -142,23 +159,29 @@ public:
     }
 };
 
-Graph initGraphFromFile(string path) {
-    int graphSize, edgesCount, begin, end, weight;
+void initGraphFromFile(int &graphSize, vector<int> &edges, int &edgesCount) {
+    string path;
+    cout << "Podaj nazwe pliku (wraz z rozszerzeniem)\n";
+    cin>>path;
     ifstream file(path);
     file >> graphSize;
     file >> edgesCount;
-    Graph graph = Graph(graphSize);
+    int begin;
+    int end;
+    int weight;
+
     for (int i = 0; i < edgesCount; i++) {
         file >> begin;
         file >> end;
         file >> weight;
-        graph.addEdge(Edge(begin, end, weight));
+        edges.push_back(begin);
+        edges.push_back(end);
+        edges.push_back(weight);
     }
-    return graph;
 }
 
-Graph initGraphFromCMD() {
-    int graphSize, edgesCount, begin, end, weight;
+void initGraphFromCMD(int &graphSize, vector<int> &edges, int &edgesCount) {
+    int begin, end, weight;
     cout << "Podaj liczbe wierzcholkow w grafie\n";
     cin >> graphSize;
     cout << "Podaj liczbe krawedzi w grafie\n";
@@ -171,10 +194,12 @@ Graph initGraphFromCMD() {
         cin >> end;
         cout << "Waga:\n";
         cin >> weight;
-        graph.addEdge(Edge(begin, end, weight));
         cout << endl;
+
+        edges.push_back(begin);
+        edges.push_back(end);
+        edges.push_back(weight);
     }
-    return graph;
 }
 
 Graph initGraphFromDefault() {
@@ -212,32 +237,54 @@ int showMenu() {
 
 // TODO imitation of multiple processes
 int main(int argc, char *argv[]) {
-    int option = showMenu();
-    string path;
+    int myid, numprocs;
+    int graphSize, edgesCount;
+    int option;     // program mode
+    vector<int> edges;
+    int* edgesArray;
     Graph graph;
-    switch (option) {
-        case 1:
-            cout << "Podaj nazwe pliku (wraz z rozszerzeniem)\n";
-            cin>>path;
-            graph = initGraphFromFile(path);
-            break;
-        case 2:
-            graph = initGraphFromCMD();
-            break;
-        default:
-            graph = initGraphFromDefault();
-            break;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
+    MPI_Comm_rank(MPI_COMM_WORLD, &myid);
+
+    if (myid == 0) {            // master asks user for mode, slaves wait
+        option = showMenu();
+        switch (option) {
+            case 1:
+                initGraphFromFile(graphSize, edges, edgesCount);
+                break;
+            case 2:
+                initGraphFromCMD(graphSize, edges, edgesCount);
+                break;
+            default:
+                graph = initGraphFromDefault();
+                break;
+        }
+        MPI_Bcast(&option, 1, MPI_INT, 0, MPI_COMM_WORLD);
+        if (option == 1 || option == 2) {
+            MPI_Bcast(&graphSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
+            MPI_Bcast(&edgesCount, 1, MPI_INT, 0, MPI_COMM_WORLD);
+            MPI_Send(&edges[0], edgesCount * 3, MPI_INT, 1, 0, MPI_COMM_WORLD);
+        }
+    } else {
+        MPI_Bcast(&option, 1, MPI_INT, 0, MPI_COMM_WORLD);
+        if (option == 1 || option == 2) {
+            MPI_Bcast(&graphSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
+            MPI_Bcast(&edgesCount, 1, MPI_INT, 0, MPI_COMM_WORLD);
+            edges.resize(edgesCount * 3);
+            MPI_Recv(&edges[0], edgesCount * 3, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        }
     }
 
-//    int myid, numprocs;
-//    MPI_Init(&argc, &argv);
-//    MPI_Comm world = MPI_COMM_WORLD;
-//    MPI_Comm_size (world, &numprocs);
-//    MPI_Comm_rank(world, &myid);
+    if (option == 1 || option == 2) {
+        graph = Graph(graphSize);
+        for (int i = 0; i < edgesCount * 3 - 2; i+=3) {
+            graph.addEdge(Edge(edges[i], edges[i+1], edges[i+2]));
+        }
+    } else {
+        graph = initGraphFromDefault();
+    }
+    graph.findMinPath(myid, numprocs);
 
-
-
-//    if (myid == 0) {
-        graph.findMinPath();
-//    }
+    MPI_Finalize();
 }
